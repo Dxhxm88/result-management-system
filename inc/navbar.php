@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+    <img src="img/logo.png" width="80px" alt="">
     <a href="<?= route('') ?>" class="d-flex align-items-center text-dark text-decoration-none">
         <span class="fs-4"><?= $_ENV['APP_NAME'] ?></span>
     </a>
