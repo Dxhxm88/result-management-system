@@ -23,6 +23,17 @@ if (isset($_POST['check'])) {
 
             <?php include(asset('/inc/navbar.php')) ?>
 
+            <!-- START HERE ALERT -->
+            <?php if(isset($_SESSION['alert'])) { ?>
+                <div class="alert <?= $_SESSION['color'] ?>" role="alert">
+                    <?= $_SESSION['alert'] ?>
+                </div>
+            <?php }
+            unset($_SESSION['alert']);
+            unset($_SESSION['color']);
+            ?>
+            <!-- END HERE ALERT -->
+
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
                 <img src="img/logosriti.png" width="200px" alt="">
                 <h1 class="display-4 fw-normal">Check your result here</h1>

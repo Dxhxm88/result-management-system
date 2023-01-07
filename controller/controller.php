@@ -51,8 +51,10 @@ function mysqlj($query)
     return mysqli_query($conn, $query);
 }
 
-function alert($message)
+function alert($message, $color="alert-primary")
 {
+    $_SESSION['alert'] = $message;
+    $_SESSION['color'] = $color;
     echo "<script>alert('$message');</script>";
 }
 
@@ -338,7 +340,7 @@ function getResult($ic)
 
         return $results;
     } else {
-        alert("Student not exists!");
+        alert("Student not exists!", "alert-danger");
     }
 }
 

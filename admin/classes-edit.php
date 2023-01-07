@@ -4,8 +4,8 @@ require(asset('/config/redirect.php'));
 
 include(asset('controller/controller.php'));
 
-if (isset($_GET['class_id'])) {
-    $class = getClass($_GET['class_id']);
+if (isset($_GET['id'])) {
+    $class = getClass($_GET['id']);
 }
 
 if (isset($_POST['update'])) {
