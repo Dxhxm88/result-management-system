@@ -15,6 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <a class="me-3 py-2 text-dark text-decoration-none" href="<?= route('admin/classes.php') ?>">Classes</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="<?= route('admin/subject.php') ?>">Subject</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="<?= route('admin/result-class.php') ?>">Results</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="<?= route('admin/message.php') ?>">Message</a>
             <a class="py-2 text-dark text-decoration-none" href="<?= route('admin-login.php?logout=true') ?>">Logout</a>
         <?php } else { ?>
             <a class="me-3 py-2 text-dark text-decoration-none" href="<?= route('') ?>">Home</a>

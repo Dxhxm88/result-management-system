@@ -1,5 +1,11 @@
 <?php
 include('config/include.php');
+
+include(asset('/controller/controller.php'));
+
+if (isset($_POST['submit'])) {
+    storeMessage($_POST);
+}
 ?>
 <html lang="en">
 
@@ -20,7 +26,7 @@ include('config/include.php');
         <main class="mx-auto">
             <h2>How can we help?</h2>
             <p>Feel free to contact, send us a message</p>
-            <form class="card p-2">
+            <form class="card p-2" method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label fw-bold">Full name</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter your name">
@@ -37,7 +43,7 @@ include('config/include.php');
                     <label for="exampleInputEmail1" class="form-label fw-bold">Message</label>
                     <textarea name="message" class="form-control" rows="3" placeholder="Enter your message"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                <button type="submit" name="submit" class="btn btn-primary mb-3">Submit</button>
             </form>
         </main>
 

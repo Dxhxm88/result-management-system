@@ -21,7 +21,7 @@ function login($data)
     $password = $data['password'];
     $query = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
 
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     if (mysqli_num_rows($result) > 0) {
 
@@ -45,7 +45,7 @@ function logout()
     header('Location: index.php');
 }
 
-function mysql($query)
+function mysqlj($query)
 {
     global $conn;
     return mysqli_query($conn, $query);
@@ -64,7 +64,7 @@ function redirect($path)
 function getTotalSubject()
 {
     $query = "SELECT * FROM subjects";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return $result->num_rows;
 }
@@ -72,7 +72,7 @@ function getTotalSubject()
 function getTotalClasses()
 {
     $query = "SELECT * FROM classes";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return $result->num_rows;
 }
@@ -80,7 +80,7 @@ function getTotalClasses()
 function getTotalStudents()
 {
     $query = "SELECT * FROM students";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return $result->num_rows;
 }
@@ -89,7 +89,7 @@ function getAllStudents()
 {
     $students = array();
     $query = "SELECT students.*, classes.name AS class_name, classes.year FROM students INNER JOIN classes ON students.class_id = classes.id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     while ($row = mysqli_fetch_assoc($result)) {
         $students[] = $row;
@@ -101,7 +101,7 @@ function getAllStudents()
 function deleteStudent($id)
 {
     $query = "DELETE FROM students WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the DELETE statement was successful
     if ($result) {
@@ -114,7 +114,7 @@ function deleteStudent($id)
 function getStudent($id)
 {
     $query = "SELECT * FROM students WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return mysqli_fetch_assoc($result);
 }
@@ -122,7 +122,7 @@ function getStudent($id)
 function getStudentByIc($ic)
 {
     $query = "SELECT * FROM students WHERE ic=$ic";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     if ($result) {
         return mysqli_fetch_assoc($result);
@@ -141,7 +141,7 @@ function updateStudent($data, $id)
     $class = $data['class'];
 
     $query = "UPDATE students SET name='$name', ic='$ic', gender='$gender', address='$address', phone='$phone', class_id=$class WHERE id = $id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -162,7 +162,7 @@ function storeStudent($data)
     $class = $data['class'];
 
     $query = "INSERT INTO students (name,ic,gender,address,phone,class_id) VALUES ('$name', '$ic', '$gender', '$address', '$phone', $class)";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -177,7 +177,7 @@ function getAllClasses()
 {
     $classes = array();
     $query = "SELECT * FROM classes";
-    $result = mysql($query);
+    $result = mysqlj($query);
     while ($row = mysqli_fetch_assoc($result)) {
         $classes[] = $row;
     }
@@ -188,7 +188,7 @@ function getAllClasses()
 function getClass($id)
 {
     $query = "SELECT * FROM classes WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return mysqli_fetch_assoc($result);
 }
@@ -199,7 +199,7 @@ function updateClass($data, $id)
     $year = $data['year'];
 
     $query = "UPDATE classes SET name='$name', year='$year' WHERE id = $id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -216,7 +216,7 @@ function storeClass($data)
     $year = $data['year'];
 
     $query = "INSERT INTO classes (name,year) VALUES ('$name', '$year')";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -230,7 +230,7 @@ function storeClass($data)
 function deleteClass($id)
 {
     $query = "DELETE FROM classes WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the DELETE statement was successful
     if ($result) {
@@ -244,7 +244,7 @@ function getAllSubjects()
 {
     $data = array();
     $query = "SELECT * FROM subjects";
-    $result = mysql($query);
+    $result = mysqlj($query);
     while ($row = mysqli_fetch_assoc($result)) {
         $data[] = $row;
     }
@@ -255,7 +255,7 @@ function getAllSubjects()
 function getSubject($id)
 {
     $query = "SELECT * FROM subjects WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return mysqli_fetch_assoc($result);
 }
@@ -267,7 +267,7 @@ function updateSubject($data, $id)
     $description = $data['description'];
 
     $query = "UPDATE subjects SET name='$name', code='$code', description='$description' WHERE id = $id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -285,7 +285,7 @@ function storeSubject($data)
     $description = $data['description'];
 
     $query = "INSERT INTO subjects (name,code, description) VALUES ('$name', '$code', '$description')";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -300,7 +300,7 @@ function deleteSubject($id)
 {
     global $conn;
     $query = "DELETE FROM subjects WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the DELETE statement was successful
     if ($result) {
@@ -330,7 +330,7 @@ function getResult($ic)
         WHEN r.percentage >= 70 THEN 'B'
         WHEN r.percentage >= 60 THEN 'C'
         ELSE 'D' END AS grade FROM results r JOIN subjects s ON r.subject_id=s.id  WHERE r.student_id='$student_id'";
-        $result = mysql($query);
+        $result = mysqlj($query);
 
         while ($row = mysqli_fetch_assoc($result)) {
             $results['results'][] = $row;
@@ -346,7 +346,7 @@ function getAllStudentByClass($id)
 {
     $students = array();
     $query = "SELECT * FROM students WHERE class_id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     while ($row = mysqli_fetch_assoc($result)) {
         $row['total_subject'] = getTotalStudentSubject($row['id']);
@@ -359,7 +359,7 @@ function getAllStudentByClass($id)
 function getTotalStudentSubject($id)
 {
     $query = "SELECT * FROM results WHERE student_id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return $result->num_rows;
 }
@@ -372,7 +372,7 @@ function storeResult($data, $ic, $class_id)
     $id = $student['id'];
 
     $query = "INSERT INTO results (subject_id,percentage, student_id) VALUES ('$subject', '$grade', '$id')";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -386,7 +386,7 @@ function storeResult($data, $ic, $class_id)
 function getResultById($id)
 {
     $query = "SELECT * FROM results WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return mysqli_fetch_assoc($result);
 }
@@ -397,7 +397,7 @@ function updateResult($data, $id, $ic, $class_id)
     $grade = $data['grade'];
 
     $query = "UPDATE results SET subject_id='$subject', percentage='$grade' WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
     if ($result) {
@@ -411,7 +411,7 @@ function updateResult($data, $id, $ic, $class_id)
 function deleteResult($id, $class_id, $ic)
 {
     $query = "DELETE FROM results WHERE id=$id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     // Check if the DELETE statement was successful
     if ($result) {
@@ -426,7 +426,38 @@ function deleteResult($id, $class_id, $ic)
 function getTotalClassStudent($class_id)
 {
     $query = "SELECT * FROM students WHERE class_id=$class_id";
-    $result = mysql($query);
+    $result = mysqlj($query);
 
     return $result->num_rows;
+}
+
+function getMessages()
+{
+    $data = array();
+    $query = "SELECT * FROM message";
+    $result = mysqlj($query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
+function storeMessage($data)
+{
+    $name = $data['name'];
+    $email = $data['email'];
+    $phone = $data['phone'];
+    $message = $data['message'];
+
+    $query = "INSERT INTO message (name,email, phone, message) VALUES ('$name', '$email', '$phone', '$message')";
+    $result = mysqlj($query);
+
+    // Check if the UPDATE statement was successful
+    if ($result) {
+        alert("Message sent!");
+    } else {
+        alert("Error sending message");
+    }
+
 }
